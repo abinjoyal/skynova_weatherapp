@@ -1,4 +1,4 @@
-import 'package:flutter_application_5/home/models/tendays_model.dart';
+import 'package:skynova/home/models/tendays_model.dart';
 
 class WeatherModel {
   final String location;

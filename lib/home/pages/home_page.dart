@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_5/home/models/tendays_model.dart';
-import 'package:flutter_application_5/home/pages/tendays_page.dart';
-import 'package:flutter_application_5/home/pages/today_page.dart';
-import 'package:flutter_application_5/home/pages/tomorrow_page.dart';
-import 'package:flutter_application_5/home/widgets/homepage_widget.dart';
+import 'package:skynova/home/models/tendays_model.dart';
+import 'package:skynova/home/pages/tendays_page.dart';
+import 'package:skynova/home/pages/today_page.dart';
+import 'package:skynova/home/pages/tomorrow_page.dart';
+import 'package:skynova/home/widgets/homepage_widget.dart';
 
 class HomePage extends StatefulWidget {
   final String location;

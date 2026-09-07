@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_5/home/theme/colors.dart';
+import 'package:skynova/home/theme/colors.dart';
 
 class AppTextStyles {
   static const TextStyle city = TextStyle(

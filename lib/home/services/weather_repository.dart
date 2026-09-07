@@ -1,5 +1,5 @@
-import 'package:flutter_application_5/home/models/weather_model.dart';
-import 'package:flutter_application_5/home/services/weather_service.dart';
+import 'package:skynova/home/models/weather_model.dart';
+import 'package:skynova/home/services/weather_service.dart';
 
 class WeatherRepository {
   final WeatherService _service = WeatherService();

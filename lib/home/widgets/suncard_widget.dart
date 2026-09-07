@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_5/home/theme/colors.dart';
-import 'package:flutter_application_5/home/theme/styles.dart';
+import 'package:skynova/home/theme/colors.dart';
+import 'package:skynova/home/theme/styles.dart';
 
 class SunCardsSection extends StatelessWidget {
   final int sunrise;

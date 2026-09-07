@@ -1,9 +1,9 @@
 // ignore: unnecessary_import
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_5/home/pages/search_page.dart';
-import 'package:flutter_application_5/home/theme/colors.dart';
-import 'package:flutter_application_5/home/theme/styles.dart';
+import 'package:skynova/home/pages/search_page.dart';
+import 'package:skynova/home/theme/colors.dart';
+import 'package:skynova/home/theme/styles.dart';
 import 'package:intl/intl.dart';
 
 class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_5/home/widgets/dailyforecast_widget.dart';
-import 'package:flutter_application_5/home/widgets/hourforecast_widget.dart';
-import 'package:flutter_application_5/home/widgets/rainchance_widget.dart';
-import 'package:flutter_application_5/home/widgets/infocard_widget.dart';
-import 'package:flutter_application_5/home/widgets/suncard_widget.dart';
+import 'package:skynova/home/widgets/dailyforecast_widget.dart';
+import 'package:skynova/home/widgets/hourforecast_widget.dart';
+import 'package:skynova/home/widgets/rainchance_widget.dart';
+import 'package:skynova/home/widgets/infocard_widget.dart';
+import 'package:skynova/home/widgets/suncard_widget.dart';
 
 class TodayPage extends StatelessWidget {
   final double windSpeed;

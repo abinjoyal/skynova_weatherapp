@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_5/home/models/weather_model.dart';
-import 'package:flutter_application_5/home/pages/home_page.dart';
-import 'package:flutter_application_5/home/services/weather_repository.dart';
-import 'package:flutter_application_5/home/widgets/weather_shimmer.dart';
+import 'package:skynova/home/models/weather_model.dart';
+import 'package:skynova/home/pages/home_page.dart';
+import 'package:skynova/home/services/weather_repository.dart';
+import 'package:skynova/home/widgets/weather_shimmer.dart';
 
 void main() {
   runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));

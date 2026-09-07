@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_5/home/models/tendays_model.dart';
-import 'package:flutter_application_5/home/theme/colors.dart';
-import 'package:flutter_application_5/home/theme/styles.dart';
+import 'package:skynova/home/models/tendays_model.dart';
+import 'package:skynova/home/theme/colors.dart';
+import 'package:skynova/home/theme/styles.dart';
 
 class TendayPage extends StatelessWidget {
   final List<TendaysModel> daily;

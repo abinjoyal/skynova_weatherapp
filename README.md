@@ -1,4 +1,4 @@
-# flutter_application_5
+# Skynova Weather App
 
 A new Flutter project.
 
