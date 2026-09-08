@@ -21,6 +21,8 @@ class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {
   final ValueChanged<int> onTabChange;
   final Function(String) onCityChanged;
   final List<dynamic> hourlyList;
+  final bool isFahrenheit;
+  final VoidCallback onUnitToggle;
 
   WeatherImageHeaderDelegate({
     required this.selectedIndex,
@@ -37,6 +39,8 @@ class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {
     required this.onCityChanged,
     required this.icon,
     required this.hourlyList,
+    required this.isFahrenheit,
+    required this.onUnitToggle,
     required daily,
   });
 
@@ -57,6 +61,10 @@ class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {
     final imageSize = 60 * percent + 40;
     final feelsSize = 4 * percent + 10;
     final Size size = MediaQuery.of(context).size;
+
+    final displayTemp = isFahrenheit ? (temp * 9 / 5) + 32 : temp;
+    final displayFeels = isFahrenheit ? (feelsLike * 9 / 5) + 32 : feelsLike;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 6, 14, 4),
       decoration: BoxDecoration(
@@ -73,7 +81,7 @@ class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {
         children: [
           SizedBox(height: size.height * 0.04),
 
-          /// LOCATION + SEARCH
+          /// LOCATION + SEARCH + UNIT TOGGLE
           Row(
             children: [
               Expanded(
@@ -81,6 +89,25 @@ class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {
                   location,
                   style: AppTextStyles.city,
                   overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              InkWell(
+                onTap: onUnitToggle,
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Colors.white24,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    isFahrenheit ? "°F" : "°C",
+                    style: const TextStyle(
+                      color: AppColors.whiteText,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
               ),
               IconButton(
@@ -111,7 +138,7 @@ class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                "${temp.toStringAsFixed(0)}°",
+                "${displayTemp.toStringAsFixed(0)}°",
                 style: TextStyle(
                   fontSize: fontSize,
                   fontWeight: FontWeight.bold,
@@ -122,7 +149,7 @@ class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),
                 child: Text(
-                  "Feels like ${feelsLike.toStringAsFixed(0)}°",
+                  "Feels like ${displayFeels.toStringAsFixed(0)}°",
                   style: TextStyle(
                     color: AppColors.whiteText,
                     fontSize: feelsSize,

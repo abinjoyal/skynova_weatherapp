@@ -47,6 +47,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   int selectedIndex = 0;
+  bool isFahrenheit = false;
 
   late TabController _tabController;
 
@@ -89,6 +90,10 @@ class _HomePageState extends State<HomePage>
                 onCityChanged: widget.onCityChanged,
                 icon: widget.icon,
                 hourlyList: widget.hourlyList,
+                isFahrenheit: isFahrenheit,
+                onUnitToggle: () {
+                  setState(() => isFahrenheit = !isFahrenheit);
+                },
                 daily: widget.daily,
               ),
             ),
@@ -106,6 +111,7 @@ class _HomePageState extends State<HomePage>
               hourlyList: widget.hourlyList,
               sunrise: widget.sunrise,
               sunset: widget.sunset,
+              isFahrenheit: isFahrenheit,
             ),
             TomorrowPage(
               daily: widget.daily,

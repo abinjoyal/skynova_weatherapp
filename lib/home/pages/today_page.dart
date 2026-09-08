@@ -14,6 +14,7 @@ class TodayPage extends StatelessWidget {
 
   final int sunrise;
   final int sunset;
+  final bool isFahrenheit;
 
   const TodayPage({
     super.key,
@@ -24,6 +25,7 @@ class TodayPage extends StatelessWidget {
     required this.hourlyList,
     required this.sunrise,
     required this.sunset,
+    this.isFahrenheit = false,
   });
 
   List<double> extractDailyTemps(List<dynamic> hourlyList) {
@@ -105,11 +107,13 @@ class TodayPage extends StatelessWidget {
           humidity: humidity,
           temp: temp,
           weather: weather,
+          isFahrenheit: isFahrenheit,
         ),
 
         SizedBox(height: size.height * 0.01),
         HourForecastCard(
-          hourlyList: hourlyList
+          hourlyList: hourlyList,
+          isFahrenheit: isFahrenheit,
         ),
 
         SizedBox(height: size.height * 0.01),

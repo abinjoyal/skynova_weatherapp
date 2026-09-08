@@ -7,6 +7,7 @@ class InfoCardsSection extends StatelessWidget {
   final int humidity;
   final double temp;
   final String weather;
+  final bool isFahrenheit;
 
   const InfoCardsSection({
     super.key,
@@ -14,11 +15,15 @@ class InfoCardsSection extends StatelessWidget {
     required this.humidity,
     required this.temp,
     required this.weather,
+    this.isFahrenheit = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final displayTempStr = isFahrenheit
+        ? "${((temp * 9 / 5) + 32).toStringAsFixed(1)}°F"
+        : "${temp.toStringAsFixed(1)}°C";
 
     return Column(
       children: [
@@ -46,7 +51,7 @@ class InfoCardsSection extends StatelessWidget {
               context,
               icon: Icons.thermostat,
               title: "Temperature",
-              value: "${temp.toStringAsFixed(1)}°C",
+              value: displayTempStr,
             ),
             SizedBox(width: size.width * 0.02),
             _infoCard(
