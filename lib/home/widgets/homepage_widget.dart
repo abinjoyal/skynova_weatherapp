@@ -1,9 +1,9 @@
-// ignore: unnecessary_import
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:skynova/home/pages/search_page.dart';
 import 'package:skynova/home/theme/colors.dart';
 import 'package:skynova/home/theme/styles.dart';
+import 'package:skynova/home/widgets/weather_animation_widget.dart';
 import 'package:intl/intl.dart';
 
 class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {
@@ -65,19 +65,15 @@ class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {
     final displayTemp = isFahrenheit ? (temp * 9 / 5) + 32 : temp;
     final displayFeels = isFahrenheit ? (feelsLike * 9 / 5) + 32 : feelsLike;
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 6, 14, 4),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppColors.primaryStart, AppColors.primaryEnd],
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: WeatherAnimationWidget(weather: weather),
         ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      //
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        Container(
+          padding: const EdgeInsets.fromLTRB(12, 6, 14, 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: size.height * 0.04),
 
@@ -199,7 +195,9 @@ class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {
           ),
         ],
       ),
-    );
+    ),
+  ],
+);
   }
 
   @override
