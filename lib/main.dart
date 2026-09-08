@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:skynova/home/models/weather_model.dart';
 import 'package:skynova/home/pages/home_page.dart';
 import 'package:skynova/home/services/weather_repository.dart';
 import 'package:skynova/home/widgets/weather_shimmer.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));
 }
 
@@ -26,18 +29,62 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    futureWeather = repo.getWeather(currentCity.split(",").first.trim());
+    _loadInitialWeather();
+  }
+
+  void _loadInitialWeather() {
+    setState(() {
+      futureWeather = repo.getWeatherFromCurrentLocation().then((data) {
+        setState(() {
+          currentCity = data.location;
+          lastValidCity = data.location;
+        });
+        return data;
+      }).catchError((_) {
+        // Fallback to default city if GPS location fails or permissions denied
+        return repo.getWeather("Kanyakumari");
+      });
+    });
   }
 
   void updateCity(String newCity) {
     if (newCity.isEmpty) return;
 
     setState(() {
-      lastValidCity = currentCity;
-      currentCity = newCity;
-
-      // API uses only city name
-      futureWeather = repo.getWeather(newCity.split(",").first.trim());
+      if (newCity == "USE_CURRENT_LOCATION") {
+        futureWeather = repo.getWeatherFromCurrentLocation().then((data) {
+          setState(() {
+            currentCity = data.location;
+            lastValidCity = data.location;
+          });
+          return data;
+        }).catchError((err) {
+          final errorMsg = err.toString().replaceAll("Exception: ", "");
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("GPS Location Error: $errorMsg"),
+                backgroundColor: Colors.deepOrange,
+                behavior: SnackBarBehavior.floating,
+                duration: const Duration(seconds: 4),
+              ),
+            );
+          }
+          final fallbackCity = (lastValidCity == "USE_CURRENT_LOCATION" || lastValidCity.isEmpty)
+              ? "Kanyakumari"
+              : lastValidCity.split(",").first.trim();
+          return repo.getWeather(fallbackCity);
+        });
+      } else {
+        final cleanCity = newCity.split(",").first.trim();
+        futureWeather = repo.getWeather(cleanCity).then((data) {
+          setState(() {
+            lastValidCity = currentCity;
+            currentCity = newCity;
+          });
+          return data;
+        });
+      }
     });
   }
 
@@ -58,16 +105,45 @@ class _MyAppState extends State<MyApp> {
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
                     setState(() {
-                      currentCity = lastValidCity;
-                      futureWeather = repo.getWeather(
-                        lastValidCity.split(",").first.trim(),
-                      );
+                      final fallback = (lastValidCity == "USE_CURRENT_LOCATION" || lastValidCity.isEmpty)
+                          ? "Kanyakumari"
+                          : lastValidCity.split(",").first.trim();
+                      currentCity = fallback;
+                      futureWeather = repo.getWeather(fallback);
                     });
                   },
                 ),
                 title: const Text("Weather App"),
               ),
-              body: const Center(child: Text("City not found")),
+              body: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.location_off_outlined, size: 56, color: Colors.orange),
+                      const SizedBox(height: 16),
+                      Text(
+                        snapshot.error.toString().replaceAll("Exception: ", ""),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(height: 24),
+                      ElevatedButton.icon(
+                        icon: const Icon(Icons.refresh),
+                        label: const Text("Load Default City"),
+                        onPressed: () {
+                          setState(() {
+                            currentCity = "Kanyakumari";
+                            lastValidCity = "Kanyakumari";
+                            futureWeather = repo.getWeather("Kanyakumari");
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           }
 
@@ -81,7 +157,7 @@ class _MyAppState extends State<MyApp> {
             duration: const Duration(milliseconds: 400),
             child: HomePage(
               key: ValueKey(currentCity),
-              location: currentCity, 
+              location: currentCity,
               temp: data.temp,
               tempMin: data.tempMin,
               tempMax: data.tempMax,

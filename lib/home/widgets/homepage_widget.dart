@@ -76,10 +76,22 @@ class WeatherImageHeaderDelegate extends SliverPersistentHeaderDelegate {
           /// LOCATION + SEARCH
           Row(
             children: [
-              Text(location, style: AppTextStyles.city),
-              const Spacer(),
+              Expanded(
+                child: Text(
+                  location,
+                  style: AppTextStyles.city,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
               IconButton(
-                icon: const Icon(Icons.search),
+                icon: const Icon(Icons.my_location, color: AppColors.whiteText),
+                tooltip: "Use Current Location",
+                onPressed: () {
+                  onCityChanged("USE_CURRENT_LOCATION");
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.search, color: AppColors.whiteText),
                 onPressed: () async {
                   final city = await showSearch(
                     context: context,

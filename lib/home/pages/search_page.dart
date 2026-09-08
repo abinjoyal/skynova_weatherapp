@@ -28,7 +28,22 @@ class CitySearchDelegate extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     if (query.isEmpty) {
-      return const Center(child: Text("Search city"));
+      return ListView(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.my_location, color: Colors.blue),
+            title: const Text("Use Current Location"),
+            onTap: () {
+              close(context, "USE_CURRENT_LOCATION");
+            },
+          ),
+          const Divider(),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Center(child: Text("Type city name to search")),
+          ),
+        ],
+      );
     }
 
     return FutureBuilder<List<String>>(
@@ -45,9 +60,19 @@ class CitySearchDelegate extends SearchDelegate<String> {
         final cities = snapshot.data!;
 
         return ListView.builder(
-          itemCount: cities.length,
+          itemCount: cities.length + 1,
           itemBuilder: (context, index) {
-            final displayText = cities[index];
+            if (index == 0) {
+              return ListTile(
+                leading: const Icon(Icons.my_location, color: Colors.blue),
+                title: const Text("Use Current Location"),
+                onTap: () {
+                  close(context, "USE_CURRENT_LOCATION");
+                },
+              );
+            }
+
+            final displayText = cities[index - 1];
 
             return ListTile(
               leading: const Icon(Icons.location_city),

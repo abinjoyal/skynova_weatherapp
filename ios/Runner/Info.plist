@@ -45,5 +45,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Skynova needs location access to show local weather forecast.</string>
 </dict>
 </plist>

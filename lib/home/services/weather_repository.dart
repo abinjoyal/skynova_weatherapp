@@ -21,6 +21,18 @@ class WeatherRepository {
     return data;
   }
 
+  Future<WeatherModel> getWeatherByLocation(double lat, double lon) async {
+    final data = await _service.fetchWeatherByLocation(lat, lon);
+    _cache = data;
+    _cachedCity = data.location;
+    return data;
+  }
+
+  Future<WeatherModel> getWeatherFromCurrentLocation() async {
+    final position = await _service.getCurrentPosition();
+    return await getWeatherByLocation(position.latitude, position.longitude);
+  }
+
   void clearCache() {
     _cache = null;
     _cachedCity = null;
