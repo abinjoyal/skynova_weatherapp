@@ -128,6 +128,11 @@ class TodayPage extends StatelessWidget {
         ),
 
         SizedBox(height: size.height * 0.01),
+        UVIndexCard(
+          temp: temp,
+        ),
+
+        SizedBox(height: size.height * 0.01),
         SunCardsSection(
           sunrise: sunrise,
           sunset: sunset,
