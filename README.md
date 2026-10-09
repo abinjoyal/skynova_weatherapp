@@ -23,7 +23,6 @@
 * **API Integration**: OpenWeatherMap API (`/weather`, `/forecast`, `/geo`)
 * **State & Data Handling**: Clean Architecture (Models, Services, Repository, UI Pages & Widgets)
 * **Packages & Libraries**:
-  * `fl_chart` — Interactive temperature graph
   * `shimmer` — Skeleton loading state animations
   * `http` — REST API requests
   * `intl` — Date & time formatting
