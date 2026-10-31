@@ -13,7 +13,7 @@
   * **Tomorrow**: Summary of tomorrow's predicted climate metrics and conditions.
   * **7-Day Forecast**: Interactive temperature trend line graph (powered by `fl_chart`) paired with daily minimum and maximum temperature range bars.
 * **Performance & Caching**: Clean architecture utilizing a Repository Pattern to cache recent weather data and optimize network calls.
-* **Sleek Visual Experience**: Custom gradient headers, responsive dynamic layouts, and shimmer loading animations.
+* **Sleek Visual Experience**: Custom gradient headers, responsive dynamic layouts, and loading animations.
 
 ---
 
